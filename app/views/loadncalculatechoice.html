@@ -1,0 +1,21 @@
+ <div ng-show="objectsToChooseFrom.length" id="loading_area">
+ 	<div id="spinner"></div>
+ 	<h2 class="center_text">Helping you make the decision!</h2>
+ </div>
+
+  <div ng-show="objectsToChooseFrom.length" id="results_movies">
+  	<h2>Movie to watch:</h2>
+
+  	<h1>{{movieTitle}}</h1>
+  </div>
+
+  <div ng-show="objectsToChooseFrom.length" id="results_persons">
+  	<h1>{{subject}}</h1>
+  	<h2>Persons:</h2>
+
+  	<p ng-repeat="person in results track by $index">{{person}}</p><br>
+  </div>
+
+  <div ng-hide="objectsToChooseFrom.length">
+  	<p><span class="glyphicon glyphicon-info-sign"></span> No results to show, please <a href="#">try again</a></p>
+  </div>
