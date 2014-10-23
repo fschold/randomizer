@@ -25,6 +25,7 @@ angular.module('pickrandomApp')
     	sharedPropertiesService.setObject($scope.movies);
         //Make sure numberOfChoices is set to 0
         sharedPropertiesService.setNumberOfChoices(0);
+        sharedPropertiesService.setCallingFunction('movie');
 
     };
 

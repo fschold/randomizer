@@ -13,6 +13,7 @@ angular.module('pickrandomApp')
     var objectValue = [];
     var numberOfChoices = 0;
     var subject = '';
+    var callingFunction = '';
     
     return {
         getObject: function() {
@@ -32,6 +33,12 @@ angular.module('pickrandomApp')
         },
         setSubject: function(subject_text) {
             subject = subject_text;
+        },
+        getCallingFunction: function() {
+            return callingFunction;
+        },
+        setCallingFunction: function(function_name) {
+            callingFunction = function_name;
         },
     };    
   });

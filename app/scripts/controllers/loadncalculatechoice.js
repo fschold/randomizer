@@ -12,22 +12,36 @@ angular.module('pickrandomApp')
   	
     $scope.objectsToChooseFrom = sharedPropertiesService.getObject();
     $scope.subject = sharedPropertiesService.getSubject();
-    console.log("Subject is "+$scope.subject);
-    var typeOfChoice = "";
+    $scope.alternative_text = '';
 
+    console.log("Subject is "+$scope.subject);
+    var typeOfChoice = sharedPropertiesService.getCallingFunction();
+    var choices = 0;
+
+    document.getElementById('results_specify_yourself').style.display = 'none';
     document.getElementById('results_movies').style.display = 'none';
     document.getElementById('results_persons').style.display = 'none';
 
     //$scope.makeCalculation();
 
-    if(sharedPropertiesService.getNumberOfChoices() != 0) {
-      typeOfChoice = "person"
-      var choices = sharedPropertiesService.getNumberOfChoices(); 
+    if(typeOfChoice == "person") {
+      choices = sharedPropertiesService.getNumberOfChoices(); 
       makeCalculation(choices,typeOfChoice);
-    } else {
-      typeOfChoice = "movie";
+    } else if (typeOfChoice == "movie"){
       makeCalculation(1,typeOfChoice);
-    } 
+    } else if(typeOfChoice == "specify_yourself"){
+      choices = sharedPropertiesService.getNumberOfChoices();
+
+      if(choices > 1) {
+            console.log("1");
+            $scope.alternative_text = 'Chosen alternatives';
+          } else {
+            console.log("2");
+            $scope.alternative_text = 'Chosen alternative';
+      }
+
+      makeCalculation(choices,typeOfChoice);
+    }
 
     console.log("type is "+typeOfChoice);
 
@@ -85,8 +99,12 @@ angular.module('pickrandomApp')
   		    //Show result area
   		    document.getElementById('results_movies').style.display = 'block';
       } else if(typeOfChoice == "person") {
-           document.getElementById('results_persons').style.display = 'block';
+          document.getElementById('results_persons').style.display = 'block';
+      } else if(typeOfChoice == "specify_yourself") {
+
+          document.getElementById('results_specify_yourself').style.display = 'block';
       }
+
   	};
     
   });

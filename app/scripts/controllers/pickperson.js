@@ -26,11 +26,11 @@ angular.module('pickrandomApp')
     	sharedPropertiesService.setObject($scope.persons);
     	//console.log("Number is "+$scope.selectedNumber);
     	sharedPropertiesService.setNumberOfChoices($scope.selectedNumber);
-
+        sharedPropertiesService.setCallingFunction('person');
     };
 
     $scope.addSubject = function() {
-    	$scope.subject = $scope.context;
+    	$scope.subject = '"'+$scope.context+'"';
     	sharedPropertiesService.setSubject($scope.subject);
     };
 

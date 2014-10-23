@@ -1,8 +1,68 @@
-<h1>Coming soon...</h1>
+ <div class="container">
+  <div class="head_content">
+ 	<h2>First off, what is this about?</h2>
+   <form role="form" ng-submit="addSubject()">
+	<div class="row">
+		<div class="input-group">
+			<input type="text" ng-model="context" placeholder='Add a context, e.g. "What should I wear at tonights party?"' class="form-control">
+			<span class="input-group-btn">
+				<input type="submit" class="btn btn-primary" value="Add">
+			</span>
+		</div>
+	</div>
+   </form>
+
+   <h1>{{subject}}</h1>
+  </div>
+
+  <div class="head_content">
+	 <h1>Enter alternatives</h1>
+	  <p>Add the alternatives you want <b>Randomizer</b> to choose from bellow:</p>
+	   <h2>Add New Alternative</h2>
+		<!-- Todos input -->
+	   <form role="form" ng-submit="addAlternative()">
+		<div class="row">
+			<div class="input-group">
+				<input type="text" ng-model="alternative" placeholder="Add an alternative" class="form-control">
+				<span class="input-group-btn">
+					<input type="submit" class="btn btn-primary" value="Add">
+				</span>
+			</div>
+		</div>
+	   </form>
+  </div>
+
+  <div class="head_content">
+	<h3>Your List</h3>
+	<div ui-sortable ng-model="persons">
+	 <div class="row">
+		<!-- TODO: should not have duplicate values-->
+		<p class="input-group" ng-repeat="alternative in alternatives track by $index" style="padding:5px 10px; cursor: move;">
+			<input type="text" ng-model="alternative" class="form-control" >
+			<span ng-model="span" class="input-group-btn">
+				<button class="btn btn-danger" ng-click="removeAlternative($index)" aria-label="Remove">X</button>
+			</span>
+		</p>
+		<div ng-hide="alternatives.length"><i>No alternatives added yet</i></div>
+		<!--<p ng-hide="span" class="default_text"><i>No movies added yet<i></p>-->
+	 </div>
+	</div>
+  </div>
+
+  <div class="head_content">
+	 <h3>How many alternatives should be chosen?</h3>
+	 <p>Please specify how many alternatives that should be selected randomly:</p>
+	 <select ng-model='selectedNumber'>
+	 		<option value="">-- choose number --</option>
+			<option ng-repeat='alternative in alternatives'>{{$index+1}}</option>
+		</select>
+  </div>
 
 	<div class="center_text">
-		<a class="select_button" href="#/"> 
+		<a href="#/loadNCalculateChoice"> 
 			<button type="button" ng-click="makeTheChoice()" class="btn btn-large btn-primary" id="button_movie">
-    			<span class="glyphicon glyphicon-play"></span> Go back
+    			<span class="glyphicon glyphicon-play"></span> Help me choose!
   			</button></a>
 	</div>
+
+
