@@ -177,3 +177,10 @@ body {
 .error {
     color: red;
 }
+
+/* Etc */
+.clean-list {
+    list-style: none;
+    padding: 0;
+    font-size: 2em;
+}
