@@ -18,7 +18,7 @@
 
 	<div class="head_content">
 		<h1>Enter name of persons</h1>
-		<p>Add the names you want <b>Randomizer</b> to choose from bellow:</p>
+		<p>Add the names you want <b>Randomizer</b> to choose from below:</p>
 		<h2 id="personHeader">Add New Person</h2>
 		<!-- Todos input -->
 		<form role="form" ng-submit="addPerson()">
@@ -29,7 +29,7 @@
 					<input type="submit" class="btn btn-primary" value="Add">
 				</span>
 				</div>
-				<span ng-hide="!errors.duplicateName" class="error"><i>Person already exists in list</i></span>
+				<span ng-hide="!errors.duplicateName" class="error"><i>Person already exist in list</i></span>
 				<br ng-show="errors.emptyPersons && errors.duplicateName"/>
 				<span ng-hide="!errors.emptyPersons" class="error"><i>Atleast two persons must exist in the list</i></span>
 			</div>
@@ -46,7 +46,7 @@
 				<button class="btn btn-danger" ng-click="removePerson($index)" aria-label="Remove">X</button>
 			</span>
 				</p>
-				<div ng-hide="persons.length"><i>No names added yet</i></div>
+				<span ng-hide="persons.length"><i>No names added yet</i></span>
 			</div>
 		</div>
 	</div>
