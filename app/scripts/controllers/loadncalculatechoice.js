@@ -8,7 +8,7 @@
  * Controller of the pickrandomApp
  */
 angular.module('pickrandomApp')
-    .controller('LoadncalculatechoiceCtrl', function ($scope,sharedPropertiesService, smoothScroll) {
+    .controller('LoadncalculatechoiceCtrl', function ($scope,sharedPropertiesService, smoothScroll, $timeout) {
 
       var element = document.getElementById('topOfScreen');
       smoothScroll(element);
@@ -66,7 +66,13 @@ angular.module('pickrandomApp')
           }
         }
 
-        setTimeout(function(){spinner.stop(); $scope.displayResults(typeOfChoice);}, 3000);
+        $timeout(function() {
+          spinner.stop();
+          $scope.displayResults(typeOfChoice);
+        }, 3000)
+            .then(function(){
+              $scope.doneLoading = true;
+            });
       }
 
       $scope.displayResults = function(typeOfChoice) {
