@@ -59,7 +59,7 @@ angular.module('pickrandomApp')
             }
             else {
 
-                // If no number is selected
+                // If no number is selected, set it to 1 (default)
                 if(angular.isUndefined($scope.selectedNumber)) { $scope.selectedNumber = 1; }
 
                 // Set global variable for alternatives

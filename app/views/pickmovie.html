@@ -22,7 +22,7 @@
 	<h3>Your List</h3>
 	<div ui-sortable ng-model="movies">
 		<div class="row">
-			<p class="input-group" ng-repeat="movie in movies track by $index" style="padding:5px 10px; cursor: move;">
+			<p class="input-group" ng-repeat="movie in movies track by $index | limitTo: movies.length-1" style="padding:5px 10px; cursor: move;">
 				<input type="text" ng-model="movie" class="form-control" >
 			<span ng-model="span" class="input-group-btn">
 				<button class="btn btn-danger" ng-click="removeMovie($index)" aria-label="Remove">X</button>
