@@ -8,13 +8,21 @@
  * Controller of the pickrandomApp
  */
 angular.module('pickrandomApp')
-    .controller('PickpersonCtrl', function ($scope,sharedPropertiesService) {
+    .controller('PickpersonCtrl', function ($scope, sharedPropertiesService, $location, smoothScroll) {
         $scope.persons = [];
         $scope.subject = '';
         $scope.errors = {};
 
+        $scope.addSubject = function() {
+            $scope.errors.emptySubject = false;
+
+            $scope.subject = '"'+$scope.context+'"';
+            sharedPropertiesService.setSubject($scope.subject);
+        };
+
         $scope.addPerson = function() {
             $scope.errors.duplicateName = false;
+            $scope.errors.emptyPersons = false;
 
             var found = jQuery.inArray($scope.person, $scope.persons);
             if (found >= 0) {
@@ -33,15 +41,33 @@ angular.module('pickrandomApp')
         };
 
         $scope.makeTheChoice = function() {
-            // Set global variable for alternatives
-            sharedPropertiesService.setObject($scope.persons);
-            sharedPropertiesService.setNumberOfChoices($scope.selectedNumber);
-            sharedPropertiesService.setCallingFunction('person');
-        };
+            var element;
+            $scope.errors.emptySubject = false;
+            $scope.errors.emptyPersons = false;
 
-        $scope.addSubject = function() {
-            $scope.subject = '"'+$scope.context+'"';
-            sharedPropertiesService.setSubject($scope.subject);
+            // If subject is empty
+            if(!sharedPropertiesService.getSubject($scope.subject)){
+                element = document.getElementById('subjectHeader');
+                smoothScroll(element);
+                $scope.errors.emptySubject = true;
+            }
+            // If persons list has less than 2 elements
+            else if($scope.persons.length < 2){
+                element = document.getElementById('personHeader');
+                smoothScroll(element);
+                $scope.errors.emptyPersons = true;
+            }
+            else {
+
+                // If no number is selected
+                if(angular.isUndefined($scope.selectedNumber)) { $scope.selectedNumber = 1; }
+
+                // Set global variable for alternatives
+                sharedPropertiesService.setObject($scope.persons);
+                sharedPropertiesService.setNumberOfChoices($scope.selectedNumber);
+                sharedPropertiesService.setCallingFunction('person');
+                $location.path('/loadNCalculateChoice');
+            }
         };
 
     });

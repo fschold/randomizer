@@ -1,6 +1,6 @@
 <div class="container">
 	<div class="head_content">
-		<h2>First off, what is this about?</h2>
+		<h2 id="subjectHeader">First off, what is this about?</h2>
 		<form role="form" ng-submit="addSubject()">
 			<div class="row">
 				<div class="input-group">
@@ -9,6 +9,7 @@
 				<input type="submit" class="btn btn-primary" value="Add">
 			</span>
 				</div>
+				<span ng-hide="!errors.emptySubject" class="error"><i>Subject cannot be empty</i></span>
 			</div>
 		</form>
 
@@ -18,7 +19,7 @@
 	<div class="head_content">
 		<h1>Enter name of persons</h1>
 		<p>Add the names you want <b>Randomizer</b> to choose from bellow:</p>
-		<h2>Add New Person</h2>
+		<h2 id="personHeader">Add New Person</h2>
 		<!-- Todos input -->
 		<form role="form" ng-submit="addPerson()">
 			<div class="row">
@@ -28,7 +29,9 @@
 					<input type="submit" class="btn btn-primary" value="Add">
 				</span>
 				</div>
-				<span ng-hide="!errors.duplicateName"><i>Person already exists in list</i></span>
+				<span ng-hide="!errors.duplicateName" class="error"><i>Person already exists in list</i></span>
+				<br ng-show="errors.emptyPersons && errors.duplicateName"/>
+				<span ng-hide="!errors.emptyPersons" class="error"><i>Atleast two persons must exist in the list</i></span>
 			</div>
 		</form>
 	</div>
@@ -37,7 +40,6 @@
 		<h3>Your List</h3>
 		<div ui-sortable ng-model="persons">
 			<div class="row">
-				<!-- TODO: should not have duplicate values-->
 				<p class="input-group" ng-repeat="person in persons track by $index" style="padding:5px 10px; cursor: move;">
 					<input type="text" ng-model="person" class="form-control" required />
 			<span ng-model="span" class="input-group-btn">
@@ -51,18 +53,16 @@
 
 	<div class="head_content">
 		<h3>How many should be chosen?</h3>
-		<p>Please specify how many persons that should be selected randomly:</p>
+		<p>Please specify how many persons that should be selected randomly (default is 1):</p>
 		<select ng-model='selectedNumber'>
-			<option value="">-- choose number --</option>
-			<option ng-repeat='person in persons'>{{$index+1}}</option>
+			<option value="">-- Choose a number --</option>
+			<option ng-repeat='person in persons | limitTo: persons.length-1'>{{$index+1}}</option>
 		</select>
 	</div>
 
 	<div class="center_text">
-		<a ng-href="#/loadNCalculateChoice">
-			<button type="button" ng-click="makeTheChoice()" class="btn btn-large btn-primary" id="button_movie">
-				<span class="glyphicon glyphicon-play"></span> Help me choose!
-			</button>
-		</a>
+		<button type="button" ng-click="makeTheChoice()" class="btn btn-large btn-primary" id="button_movie">
+			<span class="glyphicon glyphicon-play"></span> Help me choose!
+		</button>
 	</div>
 </div>

@@ -8,53 +8,51 @@
  * Controller of the pickrandomApp
  */
 angular.module('pickrandomApp')
-  .controller('LoadncalculatechoiceCtrl', function ($scope,sharedPropertiesService) {
-  	
-    $scope.objectsToChooseFrom = sharedPropertiesService.getObject();
-    $scope.subject = sharedPropertiesService.getSubject();
-    $scope.alternative_text = '';
+    .controller('LoadncalculatechoiceCtrl', function ($scope,sharedPropertiesService) {
 
-    console.log("Subject is "+$scope.subject);
-    var typeOfChoice = sharedPropertiesService.getCallingFunction();
-    var choices = 0;
+      $scope.objectsToChooseFrom = sharedPropertiesService.getObject();
+      $scope.subject = sharedPropertiesService.getSubject();
+      $scope.alternative_text = '';
 
-    document.getElementById('results_specify_yourself').style.display = 'none';
-    document.getElementById('results_movies').style.display = 'none';
-    document.getElementById('results_persons').style.display = 'none';
+      console.log("Subject is "+$scope.subject);
+      var typeOfChoice = sharedPropertiesService.getCallingFunction();
+      var choices = 0;
 
-    //$scope.makeCalculation();
+      document.getElementById('results_specify_yourself').style.display = 'none';
+      document.getElementById('results_movies').style.display = 'none';
+      document.getElementById('results_persons').style.display = 'none';
 
-    if(typeOfChoice == "person") {
-      choices = sharedPropertiesService.getNumberOfChoices(); 
-      makeCalculation(choices,typeOfChoice);
-    } else if (typeOfChoice == "movie"){
-      makeCalculation(1,typeOfChoice);
-    } else if(typeOfChoice == "specify_yourself"){
-      choices = sharedPropertiesService.getNumberOfChoices();
+      if(typeOfChoice == "person") {
+        choices = sharedPropertiesService.getNumberOfChoices();
+        makeCalculation(choices,typeOfChoice);
+      } else if (typeOfChoice == "movie"){
+        makeCalculation(1,typeOfChoice);
+      } else if(typeOfChoice == "specify_yourself"){
+        choices = sharedPropertiesService.getNumberOfChoices();
 
-      if(choices > 1) {
-            console.log("1");
-            $scope.alternative_text = 'Chosen alternatives';
-          } else {
-            console.log("2");
-            $scope.alternative_text = 'Chosen alternative';
+        if(choices > 1) {
+          console.log("1");
+          $scope.alternative_text = 'Chosen alternatives';
+        } else {
+          console.log("2");
+          $scope.alternative_text = 'Chosen alternative';
+        }
+
+        makeCalculation(choices,typeOfChoice);
       }
 
-      makeCalculation(choices,typeOfChoice);
-    }
-
-    console.log("type is "+typeOfChoice);
+      console.log("type is "+typeOfChoice);
 
 
-    function makeCalculation(numberOfChoices, type) {
-      console.log("type is "+type);
+      function makeCalculation(numberOfChoices, type) {
+        console.log("type is "+type);
 
         // Add spinner
-      	var target = document.getElementById('spinner');
-      	var spinner = new Spinner().spin();
-    	  target.appendChild(spinner.el);
+        var target = document.getElementById('spinner');
+        var spinner = new Spinner().spin();
+        target.appendChild(spinner.el);
 
-      	var numberOfObjects = $scope.objectsToChooseFrom.length;
+        var numberOfObjects = $scope.objectsToChooseFrom.length;
 
         if(type == "movie") {
           var randomChooseObject = Math.floor((Math.random() * numberOfObjects) + 1);
@@ -85,26 +83,26 @@ angular.module('pickrandomApp')
           console.log($scope.chosenNumbers);
         }
 
-      	var wait = setTimeout(function(){spinner.stop(); $scope.displayResults(typeOfChoice);}, 3000);
+        var wait = setTimeout(function(){spinner.stop(); $scope.displayResults(typeOfChoice);}, 3000);
 
 
-    };
+      };
 
-  	$scope.displayResults = function(typeOfChoice) {
+      $scope.displayResults = function(typeOfChoice) {
 
-  		// Hide loading area
-  		document.getElementById('loading_area').style.display = 'none';
+        // Hide loading area
+        document.getElementById('loading_area').style.display = 'none';
 
-      if(typeOfChoice == "movie") {
-  		    //Show result area
-  		    document.getElementById('results_movies').style.display = 'block';
-      } else if(typeOfChoice == "person") {
+        if(typeOfChoice == "movie") {
+          //Show result area
+          document.getElementById('results_movies').style.display = 'block';
+        } else if(typeOfChoice == "person") {
           document.getElementById('results_persons').style.display = 'block';
-      } else if(typeOfChoice == "specify_yourself") {
+        } else if(typeOfChoice == "specify_yourself") {
 
           document.getElementById('results_specify_yourself').style.display = 'block';
-      }
+        }
 
-  	};
-    
-  });
+      };
+
+    });
