@@ -8,11 +8,10 @@
  *
  * Main module of the application.
  */
-var app = angular
+angular
     .module('pickrandomApp', [
         'ngResource',
         'ngRoute',
-        'ngMessages',
         'smoothScroll'
     ])
     .config(function ($routeProvider) {
@@ -45,18 +44,3 @@ var app = angular
                 redirectTo: '/'
             });
     });
-
-app.run(function ($rootScope, $location) {
-
-    var history = [];
-
-    $rootScope.$on('$routeChangeSuccess', function() {
-        history.push($location.$$path);
-    });
-
-    $rootScope.goBack = function () {
-        var prevUrl = history.length > 1 ? history.splice(-2)[0] : "/";
-        $location.path(prevUrl);
-    };
-
-});
