@@ -1,68 +1,68 @@
- <div class="container">
-  <div class="head_content">
- 	<h2>First off, what is this about?</h2>
-   <form role="form" ng-submit="addSubject()">
-	<div class="row">
-		<div class="input-group">
-			<input type="text" ng-model="context" placeholder='Add a context, e.g. "Who has to go and buy chips?"' class="form-control">
+<div class="container">
+	<div class="head_content">
+		<h2 id="subjectHeader">First off, what is this about?</h2>
+		<form role="form" ng-submit="addSubject()">
+			<div class="row">
+				<div class="input-group">
+					<input type="text" ng-model="context" placeholder='Add a context, e.g. "Who has to go and buy chips?"' class="form-control" required />
 			<span class="input-group-btn">
 				<input type="submit" class="btn btn-primary" value="Add">
 			</span>
-		</div>
+				</div>
+				<span ng-hide="!errors.emptySubject" class="error"><i>Subject cannot be empty</i></span>
+			</div>
+		</form>
+
+		<h1>{{subject}}</h1>
 	</div>
-   </form>
 
-   <h1>{{subject}}</h1>
-  </div>
-
-  <div class="head_content">
-	 <h1>Enter name of persons</h1>
-	  <p>Add the names you want <b>Randomizer</b> to choose from bellow:</p>
-	   <h2>Add New Person</h2>
+	<div class="head_content">
+		<h1>Enter name of persons</h1>
+		<p>Add the names you want <b>Randomizer</b> to choose from below:</p>
+		<h2 id="personHeader">Add New Person</h2>
 		<!-- Todos input -->
-	   <form role="form" ng-submit="addPerson()">
-		<div class="row">
-			<div class="input-group">
-				<input type="text" ng-model="person" placeholder="Add a name" class="form-control">
+		<form role="form" ng-submit="addPerson()">
+			<div class="row">
+				<div class="input-group">
+					<input type="text" ng-model="person" placeholder="Add a name" class="form-control" required />
 				<span class="input-group-btn">
 					<input type="submit" class="btn btn-primary" value="Add">
 				</span>
+				</div>
+				<span ng-hide="!errors.duplicateName" class="error"><i>Person already exist in list</i></span>
+				<br ng-show="errors.emptyPersons && errors.duplicateName"/>
+				<span ng-hide="!errors.emptyPersons" class="error"><i>Atleast two persons must exist in the list</i></span>
 			</div>
-		</div>
-	   </form>
-  </div>
+		</form>
+	</div>
 
-  <div class="head_content">
-	<h3>Your List</h3>
-	<div ui-sortable ng-model="persons">
-	 <div class="row">
-		<!-- TODO: should not have duplicate values-->
-		<p class="input-group" ng-repeat="person in persons track by $index" style="padding:5px 10px; cursor: move;">
-			<input type="text" ng-model="person" class="form-control" >
+	<div class="head_content">
+		<h3>Your List</h3>
+		<div ui-sortable ng-model="persons">
+			<div class="row">
+				<p class="input-group" ng-repeat="person in persons track by $index" style="padding:5px 10px; cursor: move;">
+					<input type="text" ng-model="person" class="form-control" required />
 			<span ng-model="span" class="input-group-btn">
 				<button class="btn btn-danger" ng-click="removePerson($index)" aria-label="Remove">X</button>
 			</span>
-		</p>
-		<div ng-hide="persons.length"><i>No names added yet</i></div>
-		<!--<p ng-hide="span" class="default_text"><i>No movies added yet<i></p>-->
-	 </div>
+				</p>
+				<span ng-hide="persons.length"><i>No names added yet</i></span>
+			</div>
+		</div>
 	</div>
-  </div>
 
-  <div class="head_content">
-	 <h3>How many should be chosen?</h3>
-	 <p>Please specify how many persons that should be selected randomly:</p>
-	 <select ng-model='selectedNumber'>
-	 		<option value="">-- choose number --</option>
-			<option ng-repeat='person in persons'>{{$index+1}}</option>
+	<div class="head_content">
+		<h3>How many should be chosen?</h3>
+		<p>Please specify how many persons that should be selected randomly (default is 1):</p>
+		<select ng-model='selectedNumber'>
+			<option value="">-- Choose a number --</option>
+			<option ng-repeat='person in persons | limitTo: persons.length-1'>{{$index+1}}</option>
 		</select>
-  </div>
+	</div>
 
 	<div class="center_text">
-		<a href="#/loadNCalculateChoice"> 
-			<button type="button" ng-click="makeTheChoice()" class="btn btn-large btn-primary" id="button_movie">
-    			<span class="glyphicon glyphicon-play"></span> Help me choose!
-  			</button></a>
+		<button type="button" ng-click="makeTheChoice()" class="btn btn-large btn-primary" id="button_movie">
+			<span class="glyphicon glyphicon-play"></span> Help me choose!
+		</button>
 	</div>
-
-
+</div>

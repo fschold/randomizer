@@ -8,103 +8,83 @@
  * Controller of the pickrandomApp
  */
 angular.module('pickrandomApp')
-  .controller('LoadncalculatechoiceCtrl', function ($scope,sharedPropertiesService) {
-  	
-    $scope.objectsToChooseFrom = sharedPropertiesService.getObject();
-    $scope.subject = sharedPropertiesService.getSubject();
-    $scope.alternative_text = '';
+    .controller('LoadncalculatechoiceCtrl', function ($scope,sharedPropertiesService, smoothScroll, $timeout) {
 
-    console.log("Subject is "+$scope.subject);
-    var typeOfChoice = sharedPropertiesService.getCallingFunction();
-    var choices = 0;
+      var element = document.getElementById('topOfScreen');
+      smoothScroll(element);
 
-    document.getElementById('results_specify_yourself').style.display = 'none';
-    document.getElementById('results_movies').style.display = 'none';
-    document.getElementById('results_persons').style.display = 'none';
+      // Get subject and objects
+      $scope.objectsToChooseFrom = sharedPropertiesService.getObject();
+      $scope.subject = sharedPropertiesService.getSubject();
+      $scope.alternative_text = '';
+      var choices = sharedPropertiesService.getNumberOfChoices();
+      var typeOfChoice = sharedPropertiesService.getCallingFunction().toLowerCase();
 
-    //$scope.makeCalculation();
+      // Hide all result divs
+      //document.getElementById('results_specify_yourself').style.display = 'none';
+      document.getElementById('results_movies').style.display = 'none';
+      document.getElementById('results_persons').style.display = 'none';
 
-    if(typeOfChoice == "person") {
-      choices = sharedPropertiesService.getNumberOfChoices(); 
-      makeCalculation(choices,typeOfChoice);
-    } else if (typeOfChoice == "movie"){
-      makeCalculation(1,typeOfChoice);
-    } else if(typeOfChoice == "specify_yourself"){
-      choices = sharedPropertiesService.getNumberOfChoices();
-
-      if(choices > 1) {
-            console.log("1");
-            $scope.alternative_text = 'Chosen alternatives';
-          } else {
-            console.log("2");
-            $scope.alternative_text = 'Chosen alternative';
+      if(typeOfChoice == "person") {
+        $scope.alternative_text = 'Person';
+      } else if (typeOfChoice == "movie"){
+        choices = 1;
+      } else if(typeOfChoice == "specify_yourself"){
+        $scope.alternative_text = 'Alternative';
       }
 
-      makeCalculation(choices,typeOfChoice);
-    }
+      _makeCalculation(choices, typeOfChoice);
 
-    console.log("type is "+typeOfChoice);
-
-
-    function makeCalculation(numberOfChoices, type) {
-      console.log("type is "+type);
+      function _makeCalculation(numberOfChoices, type) {
 
         // Add spinner
-      	var target = document.getElementById('spinner');
-      	var spinner = new Spinner().spin();
-    	  target.appendChild(spinner.el);
+        var target = document.getElementById('spinner');
+        var spinner = new Spinner().spin();
+        target.appendChild(spinner.el);
 
-      	var numberOfObjects = $scope.objectsToChooseFrom.length;
+        var numberOfObjects = $scope.objectsToChooseFrom.length;
 
+        var randomChooseObject;
         if(type == "movie") {
-          var randomChooseObject = Math.floor((Math.random() * numberOfObjects) + 1);
+          randomChooseObject = Math.floor((Math.random() * numberOfObjects) + 1);
           $scope.movieTitle = $scope.objectsToChooseFrom[randomChooseObject-1];
         } else {
           $scope.results = [];
           $scope.chosenNumbers = [];
-          var randomChooseObject;
-
-          console.log("number of is "+numberOfChoices);
 
           for (var i = 0; i < numberOfChoices; i++) {
 
             randomChooseObject = Math.floor((Math.random() * numberOfObjects) + 1);
-            //console.log("before "+randomChooseObject);
 
             // Values should be unique
             while($scope.chosenNumbers.indexOf(randomChooseObject) != -1) {
               randomChooseObject = Math.floor((Math.random() * numberOfObjects) + 1);
-              //console.log("while "+randomChooseObject);
             }
-            //console.log("ramdomchoose is "+randomChooseObject);
             $scope.chosenNumbers[i] = randomChooseObject;
             $scope.results[i]=$scope.objectsToChooseFrom[randomChooseObject-1];
 
-          };
-          console.log($scope.results);
-          console.log($scope.chosenNumbers);
+          }
         }
 
-      	var wait = setTimeout(function(){spinner.stop(); $scope.displayResults(typeOfChoice);}, 3000);
-
-
-    };
-
-  	$scope.displayResults = function(typeOfChoice) {
-
-  		// Hide loading area
-  		document.getElementById('loading_area').style.display = 'none';
-
-      if(typeOfChoice == "movie") {
-  		    //Show result area
-  		    document.getElementById('results_movies').style.display = 'block';
-      } else if(typeOfChoice == "person") {
-          document.getElementById('results_persons').style.display = 'block';
-      } else if(typeOfChoice == "specify_yourself") {
-
-          document.getElementById('results_specify_yourself').style.display = 'block';
+        $timeout(function() {
+          spinner.stop();
+          $scope.displayResults(typeOfChoice);
+        }, 3000)
+            .then(function(){
+              $scope.doneLoading = true;
+            });
       }
 
-  	};
-    
-  });
+      $scope.displayResults = function(typeOfChoice) {
+
+        // Hide loading area
+        document.getElementById('loading_area').style.display = 'none';
+
+        //Show result area
+        if(typeOfChoice == "movie") {
+          document.getElementById('results_movies').style.display = 'block';
+        } else {
+          document.getElementById('results_persons').style.display = 'block';
+        }
+      };
+    });

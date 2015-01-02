@@ -1,41 +1,40 @@
- <div class="container">
- 	<div class="head_content">
-	  <h1>Enter Movie titles!</h1>
-	   <p>Add the titles you want to <b>Randomizer</b> to choose from bellow:</p>
-	   <h2>Add New Movie</h2>
+<div class="container">
+	<div class="head_content">
+		<h1>Enter Movie titles!</h1>
+		<p>Add the titles you want to <b>Randomizer</b> to choose from below:</p>
+		<h2>Add New Movie</h2>
 		<!-- Todos input -->
-	   <form role="form" ng-submit="addMovie()">
-		<div class="row">
-			<div class="input-group">
-				<input type="text" ng-model="movie" placeholder="Add a movie title" class="form-control">
+		<form role="form" ng-submit="addMovie()">
+			<div class="row">
+				<div class="input-group">
+					<input type="text" ng-model="movie" placeholder="Add a movie title" class="form-control" required />
 				<span class="input-group-btn">
 					<input type="submit" class="btn btn-primary" value="Add">
 				</span>
+				</div>
+				<span ng-hide="!errors.duplicateMovie" class="error"><i>Movie already exist in list</i></span>
+				<br ng-show="errors.duplicateMovie && errors.tooFewMovies"/>
+				<span ng-hide="!errors.tooFewMovies" class="error"><i>Atleast two movies must exist in the list</i></span>
 			</div>
-		</div>
-	  </form>
+		</form>
 	</div>
 
 	<h3>Your List</h3>
 	<div ui-sortable ng-model="movies">
-	  <div class="row">
-		<!-- TODO: should not have duplicate values-->
-		<p class="input-group" ng-repeat="movie in movies track by $index" style="padding:5px 10px; cursor: move;">
-			<input type="text" ng-model="movie" class="form-control" >
+		<div class="row">
+			<p class="input-group" ng-repeat="movie in movies track by $index | limitTo: movies.length-1" style="padding:5px 10px; cursor: move;">
+				<input type="text" ng-model="movie" class="form-control" required />
 			<span ng-model="span" class="input-group-btn">
 				<button class="btn btn-danger" ng-click="removeMovie($index)" aria-label="Remove">X</button>
 			</span>
-		</p>
-		<div ng-hide="movies.length"><i>No movies added yet</i></div>
-	  </div>
-		<!--<p ng-hide="span" class="default_text"><i>No movies added yet<i></p>-->
+			</p>
+			<span ng-hide="movies.length"><i>No movies added yet</i></span>
+		</div>
 	</div>
 
 	<div class="center_text">
-		<a class="select_button" href="#/loadNCalculateChoice"> 
-			<button type="button" ng-click="makeTheChoice()" class="btn btn-large btn-primary" id="button_movie">
-    			<span class="glyphicon glyphicon-play"></span> Help me choose!
-  			</button></a>
+		<button type="button" ng-click="makeTheChoice()" class="btn btn-large btn-primary" id="button_movie">
+			<span class="glyphicon glyphicon-play"></span> Help me choose!
+		</button>
 	</div>
-
-
+</div>
