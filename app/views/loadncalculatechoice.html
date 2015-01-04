@@ -5,7 +5,29 @@
 
 <div ng-show="objectsToChooseFrom.length" id="results_movies">
  <h2>Movie to watch:</h2>
- <h1>{{movieTitle}}</h1>
+ <div id="movie-from-db" ng-if="movie.movieFound">
+  <h1 id="movie-title">{{movie.original_title | capitalize}}</h1> <h1>({{movie.release_date | limitTo:4}})</h1>
+  <div class="row">
+   <div class="col-md-5">
+    <img ng-src="{{movie.posterUrl}}"/>
+    <br/>
+    <a ng-href="http://www.imdb.com/title/{{movie.imdb_id}}" target="_blank"><img src="/images/imdb-logo.png"/></a>
+   </div>
+   <div class="col-md-7" id="movie-info">
+    <p><b>Runtime:</b> {{movie.runtime}} min</p>
+    <ul class="list-inline"><b>Genres: </b>
+     <li ng-repeat="genre in movie.genres">
+      {{genre.name}}{{$last ? '' : ',&nbsp;'}}
+     </li>
+    </ul>
+    <hr class="soften"/>
+    <p>{{movie.overview}}</p>
+    <hr class="soften"/>
+    <rating ng-model="movie.vote_average" max="10" readonly="true"></rating> <span><b>{{movie.vote_average}}</b>/10 ({{movie.vote_count}} votes)</span>
+   </div>
+  </div>
+ </div>
+ <h1 ng-if="!movie.movieFound">{{movieTitle}}</h1>
 </div>
 
 <div ng-show="objectsToChooseFrom.length" id="results_persons">
@@ -25,6 +47,7 @@
  </div>
 </div>
 
+<br/>
 <br/>
 <div ng-hide="!doneLoading">
  <a ng-href="#/"><span class="glyphicon glyphicon-home"></span> Go back to menu</a>

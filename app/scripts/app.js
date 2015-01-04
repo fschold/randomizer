@@ -12,7 +12,8 @@ angular
     .module('pickrandomApp', [
         'ngResource',
         'ngRoute',
-        'smoothScroll'
+        'smoothScroll',
+        'ui.bootstrap'
     ])
     .config(function ($routeProvider) {
         $routeProvider

@@ -178,3 +178,39 @@ body {
     padding: 0;
     font-size: 2em;
 }
+
+/* Movie result */
+#results_movies h1{
+    display: inline;
+    line-height: 1.4em;
+}
+
+#results_movies .row {
+    margin-top: 1%;
+    text-align: left;
+}
+
+#results_movies * {
+    padding: 0;
+}
+
+#results_movies hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#results_movies ul {
+    margin: 0;
+}
+
+#results_movies img {
+    margin-top: 1%;
+}
+
+#movie-title {
+    font-style: italic;
+}
+
+#movie-info + p {
+    font-style: italic;
+}

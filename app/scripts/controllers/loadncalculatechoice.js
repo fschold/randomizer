@@ -8,10 +8,17 @@
  * Controller of the pickrandomApp
  */
 angular.module('pickrandomApp')
-    .controller('LoadncalculatechoiceCtrl', function ($scope,sharedPropertiesService, smoothScroll, $timeout) {
+    .controller('LoadncalculatechoiceCtrl', function ($scope,sharedPropertiesService, smoothScroll, $timeout, movieDbApi) {
 
+      // Smooth scroll stuff
       var element = document.getElementById('topOfScreen');
       smoothScroll(element);
+
+      // Movie object
+      $scope.movie = {};
+
+      // Errors
+      $scope.errors = {};
 
       // Get subject and objects
       $scope.objectsToChooseFrom = sharedPropertiesService.getObject();
@@ -21,7 +28,6 @@ angular.module('pickrandomApp')
       var typeOfChoice = sharedPropertiesService.getCallingFunction().toLowerCase();
 
       // Hide all result divs
-      //document.getElementById('results_specify_yourself').style.display = 'none';
       document.getElementById('results_movies').style.display = 'none';
       document.getElementById('results_persons').style.display = 'none';
 
@@ -45,9 +51,36 @@ angular.module('pickrandomApp')
         var numberOfObjects = $scope.objectsToChooseFrom.length;
 
         var randomChooseObject;
+
+        // If movie
         if(type == "movie") {
           randomChooseObject = Math.floor((Math.random() * numberOfObjects) + 1);
           $scope.movieTitle = $scope.objectsToChooseFrom[randomChooseObject-1];
+
+          // Search for movie in TMDB (The Movie Database)
+          var call = movieDbApi.searchMovies($scope.movieTitle);
+
+          call.then(function(response){
+                call = movieDbApi.searchMovieInformation(response.data.results[0].id);
+
+                call.then(function(response){
+                      $scope.movie = response.data;
+                      $scope.movie.movieFound = true;
+                      $scope.movie.posterUrl = movieDbApi.getImgBaseUrl() + $scope.movie.poster_path;
+                    },
+                    function(response){
+                      console.log(response);
+                    })
+              },
+              function(response){
+                $scope.movie.movieFound = false;
+                console.log(response);
+              },
+          function(){
+            $scope.movie.movieFound = false;
+          });
+
+          // If person or own alternatives
         } else {
           $scope.results = [];
           $scope.chosenNumbers = [];
