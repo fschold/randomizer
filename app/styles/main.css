@@ -211,6 +211,7 @@ body {
     font-style: italic;
 }
 
-#movie-info + p {
-    font-style: italic;
+#tmdb-logo {
+    max-width: 150px;
+    margin-top: 3% !important;
 }

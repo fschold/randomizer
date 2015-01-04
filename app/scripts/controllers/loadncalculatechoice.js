@@ -8,7 +8,7 @@
  * Controller of the pickrandomApp
  */
 angular.module('pickrandomApp')
-    .controller('LoadncalculatechoiceCtrl', function ($scope,sharedPropertiesService, smoothScroll, $timeout, movieDbApi) {
+    .controller('LoadncalculatechoiceCtrl', function ($scope, sharedPropertiesService, smoothScroll, $timeout, movieDbApi, $log) {
 
       // Smooth scroll stuff
       var element = document.getElementById('topOfScreen');
@@ -69,12 +69,12 @@ angular.module('pickrandomApp')
                       $scope.movie.posterUrl = movieDbApi.getImgBaseUrl() + $scope.movie.poster_path;
                     },
                     function(response){
-                      console.log(response);
+                      $log.error(response);
                     })
               },
               function(response){
                 $scope.movie.movieFound = false;
-                console.log(response);
+                $log.error(response);
               },
           function(){
             $scope.movie.movieFound = false;

@@ -12,6 +12,7 @@
     <img ng-src="{{movie.posterUrl}}"/>
     <br/>
     <a ng-href="http://www.imdb.com/title/{{movie.imdb_id}}" target="_blank"><img src="/images/imdb-logo.png"/></a>
+    <a ng-href="https://www.themoviedb.org/movie/{{movie.id}}" target="_blank"><img src="/images/tmdb-logo.png" id="tmdb-logo"/></a>
    </div>
    <div class="col-md-7" id="movie-info">
     <p><b>Runtime:</b> {{movie.runtime}} min</p>
@@ -23,7 +24,7 @@
     <hr class="soften"/>
     <p>{{movie.overview}}</p>
     <hr class="soften"/>
-    <rating ng-model="movie.vote_average" max="10" readonly="true"></rating> <span><b>{{movie.vote_average}}</b>/10 ({{movie.vote_count}} votes)</span>
+    <rating ng-model="movie.vote_average" max="10" readonly="true"></rating> <span><b>{{movie.vote_average}}</b>/10 ({{movie.vote_count | number}} votes)</span>
    </div>
   </div>
  </div>
