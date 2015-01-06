@@ -5,7 +5,7 @@
 			<div class="row">
 				<div class="input-group">
 					<input type="text" ng-model="context" placeholder='Add a context, e.g. "What should I wear at tonights party?"'
-						   class="form-control" required />
+						   class="form-control" required>
 			<span class="input-group-btn">
 				<input type="submit" class="btn btn-primary" value="Add">
 			</span>
@@ -25,13 +25,13 @@
 		<form role="form" ng-submit="addAlternative()">
 			<div class="row">
 				<div class="input-group">
-					<input type="text" ng-model="alternative" placeholder="Add an alternative" class="form-control" required />
+					<input type="text" ng-model="alternative" placeholder="Add an alternative" class="form-control" required>
 				<span class="input-group-btn">
 					<input type="submit" class="btn btn-primary" value="Add">
 				</span>
 				</div>
 				<span ng-hide="!errors.duplicateAlternative" class="error"><i>Alternative already exist in list</i></span>
-				<br ng-show="errors.emptyAlternatives && errors.duplicateAlternative"/>
+				<br ng-show="errors.emptyAlternatives && errors.duplicateAlternative">
 				<span ng-hide="!errors.emptyAlternatives" class="error"><i>At least two alternatives must exist in the list</i></span>
 			</div>
 		</form>

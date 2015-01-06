@@ -110,6 +110,10 @@ body {
     outline: none;
 }
 
+#header_link img {
+    width: 300px;
+}
+
 #header_container {
     width: 70%;
     height: 50px;
