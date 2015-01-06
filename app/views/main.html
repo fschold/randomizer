@@ -2,16 +2,16 @@
 	<h1>Randomizer</h1>
 	<h2>- Helps you make those difficult decisions!</h2>
 	<p>In order to help you with a given decision problem, please select one of the categories below:</p>
-	<div id="alternatives" class="center_text">
-		<a ng-href="#/pickperson"><button type="button" class="btn btn-default btn-lg" id="button_person">
+	<ul id="alternatives" class="center_text list-unstyled">
+		<li ng-href="#/pickperson"><button type="button" class="btn btn-default btn-lg" id="button_person">
 			<span class="glyphicon glyphicon-user"></span> Choose person!
-		</button></a><br>
-		<a ng-href="#/pickmovie"><button type="button" class="btn btn-default btn-lg" id="button_movie">
+		</button></li>
+		<li ng-href="#/pickmovie"><button type="button" class="btn btn-default btn-lg" id="button_movie">
 			<span class="glyphicon glyphicon-film"></span> Choose movie!
-		</button></a><br>
-		<a ng-href="#/specifyYourself"><button type="button" class="btn btn-default btn-lg" id="button_movie">
+		</button></li>
+		<li ng-href="#/specifyYourself"><button type="button" class="btn btn-default btn-lg" id="button_alternatives">
 			<span class="glyphicon glyphicon-edit"></span> Specify yourself!
-		</button></a>
-		<a ng-href="#/about"><p id="text_what">What is this?</p></a>
-	</div>
+		</button></li>
+	</ul>
+	<a ng-href="#/about"><p id="text_what">What is this?</p></a>
 </div>
