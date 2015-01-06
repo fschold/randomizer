@@ -106,6 +106,10 @@ body {
     position: relative;
 }
 
+#header_link {
+    outline: none;
+}
+
 #header_container {
     width: 70%;
     height: 50px;
